@@ -1,0 +1,4 @@
+rootProject.name = 'online-radio'
+include 'online-radio-api'
+include 'online-radio-db'
+
