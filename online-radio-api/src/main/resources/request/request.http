@@ -1,0 +1,23 @@
+GET http://localhost:8080/test
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQG1haWwuY29tIiwic2NvcGVzIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJpc3MiOiJvbmxpbmUtcmFkaW8iLCJpYXQiOjE2NTMyMzE1OTksImV4cCI6MTY1NDA5NTU5OX0.BJJmWlcxadlehc3GKRWGiONuN_4Lpru8RwN46nG7qnk
+
+###
+POST http://localhost:8080/signup
+Content-Type: application/json
+
+{
+  "nickname": "user",
+  "email": "user@mail.com",
+  "password": "qwerty"
+}
+
+###
+
+POST http://localhost:8080/loginin
+Content-Type: application/json
+
+{
+  "email": "user@mail.com",
+  "password": "qwerty"
+}
+

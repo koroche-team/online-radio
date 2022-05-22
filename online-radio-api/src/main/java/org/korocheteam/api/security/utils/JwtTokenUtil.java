@@ -1,10 +1,11 @@
-package org.korocheteam.api.utils;
+package org.korocheteam.api.security.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.korocheteam.api.models.Account;
 import org.korocheteam.api.models.Constants;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,12 @@ import java.util.function.Function;
 
 @Component
 public class JwtTokenUtil implements Serializable {
+
+	@Value("${spring.security.user.password}")
+	private String SIGNING_KEY;
+
+	@Value("${spring.security.user.token.time}")
+	private Integer ACCESS_TOKEN_VALIDITY_TIME;
 
 	public String getUsernameFromToken(String token) {
 		return getClaimFromToken(token, Claims::getSubject);
@@ -32,7 +39,7 @@ public class JwtTokenUtil implements Serializable {
 
 	private Claims getAllClaimsFromToken(String token) {
 		return Jwts.parser()
-				.setSigningKey(Constants.SIGNING_KEY)
+				.setSigningKey(SIGNING_KEY)
 				.parseClaimsJws(token)
 				.getBody();
 	}
@@ -43,24 +50,20 @@ public class JwtTokenUtil implements Serializable {
 	}
 
 	public String generateToken(Account account) {
-		return doGenerateToken(account.getEmail());
-	}
-
-	private String doGenerateToken(String subject) {
-
-		Claims claims = Jwts.claims().setSubject(subject);
-		claims.put("scopes", List.of(new SimpleGrantedAuthority("ROLE_ADMIN")));
+		Claims claims = Jwts.claims().setSubject(account.getEmail());
+		claims.put("scopes", List.of(new SimpleGrantedAuthority(account.getRole().name())));
 
 		return Jwts.builder()
 				.setClaims(claims)
-				.setIssuer("online_radio")
+				.setIssuer("online-radio")
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + Constants.ACCESS_TOKEN_VALIDITY_TIME))
-				.signWith(SignatureAlgorithm.HS256, Constants.SIGNING_KEY)
+				.setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY_TIME))
+				.signWith(SignatureAlgorithm.HS256, SIGNING_KEY)
 				.compact();
 	}
 
 	public Boolean validateToken(String token, UserDetails userDetails) {
+		// TODO: make normal validation
 		final String username = getUsernameFromToken(token);
 		return (
 				username.equals(userDetails.getUsername())

@@ -1,4 +1,4 @@
-package org.korocheteam.api.details;
+package org.korocheteam.api.security.details;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

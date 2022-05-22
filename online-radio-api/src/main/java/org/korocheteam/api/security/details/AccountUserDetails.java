@@ -1,4 +1,4 @@
-package org.korocheteam.api.details;
+package org.korocheteam.api.security.details;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,10 @@ public class AccountUserDetails implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Collections.singleton(new SimpleGrantedAuthority(account.getRole().name()));
+		String role = account.getRole().name();
+		GrantedAuthority authority = new SimpleGrantedAuthority(role);
+
+		return Collections.singletonList(authority);
 	}
 
 	@Override
@@ -38,7 +41,7 @@ public class AccountUserDetails implements UserDetails {
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return false;
+		return true;
 	}
 
 	@Override
