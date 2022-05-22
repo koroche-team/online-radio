@@ -12,8 +12,7 @@ Content-Type: application/json
 }
 
 ###
-
-POST http://localhost:8080/loginin
+POST http://localhost:8080/login
 Content-Type: application/json
 
 {

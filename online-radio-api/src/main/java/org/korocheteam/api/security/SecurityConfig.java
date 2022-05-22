@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	public static final String API_URL = "";
 
-	public static final String LOGIN_FILTER_PROCESS_URL = API_URL + "/loginin";
+	public static final String LOGIN_FILTER_PROCESS_URL = API_URL + "/login";
 	public static final String SIGNUP_URL = API_URL + "/signup";
 
 	@Autowired
@@ -49,21 +49,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.exceptionHandling()
 			.authenticationEntryPoint(
-					(request, response, ex) -> {
-						response.sendError(
-								HttpServletResponse.SC_UNAUTHORIZED,
-								ex.getMessage()
-						);
-					}
+					(request, response, ex) -> response.sendError(
+							HttpServletResponse.SC_UNAUTHORIZED,
+							ex.getMessage()
+					)
 			)
 			.and();
 
-		// TODO: fix authentication 403 response status
 		http.authorizeRequests()
 				.antMatchers(SIGNUP_URL).permitAll()
 				.antMatchers(LOGIN_FILTER_PROCESS_URL).permitAll()
 				.antMatchers("/status/**").permitAll()
-				.antMatchers("/**").hasAnyRole("USER", "ADMIN");
+				.antMatchers("/**").authenticated();
 
 
 		UsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter = new TokenUsernamePasswordAuthenticationFilter( objectMapper(), jwtTokenUtil, accountsRepository);
