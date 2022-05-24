@@ -36,4 +36,6 @@ public class Account {
 	private String password;
 
 	private String token;
+
+	private Integer score;
 }
