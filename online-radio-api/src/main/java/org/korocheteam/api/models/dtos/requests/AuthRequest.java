@@ -1,4 +1,4 @@
-package org.korocheteam.api.models.dtos;
+package org.korocheteam.api.models.dtos.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AuthResponse {
-    private String token;
+public class AuthRequest {
+    private String email;
+    private String password;
 }

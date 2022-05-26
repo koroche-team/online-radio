@@ -26,7 +26,7 @@ public class AccountUserDetails implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		return account.getPassword();
+		return account.getHashPassword();
 	}
 
 	@Override

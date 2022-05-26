@@ -33,7 +33,7 @@ public class Account {
 
 	private String email;
 	private String nickname;
-	private String password;
+	private String hashPassword;
 
 	private String token;
 }

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.korocheteam.api.models.Account;
-import org.korocheteam.api.models.dtos.AuthRequest;
-import org.korocheteam.api.models.dtos.AuthResponse;
+import org.korocheteam.api.models.dtos.requests.AuthRequest;
+import org.korocheteam.api.models.dtos.responses.AuthResponse;
 import org.korocheteam.api.repositories.AccountsRepository;
 import org.korocheteam.api.security.details.AccountUserDetails;
 import org.korocheteam.api.security.utils.JwtTokenUtil;
@@ -15,6 +15,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -24,7 +25,7 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 @Slf4j
-public class TokenUsernamePasswordAuthenticationFilter extends org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter {
+public class TokenUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final ObjectMapper objectMapper;
     private final JwtTokenUtil jwtTokenUtil;
     private final AccountsRepository accountsRepository;

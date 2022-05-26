@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.util.Objects;
 import java.util.Properties;
 
 @Configuration
@@ -30,13 +31,13 @@ public class DatabaseConfig {
     @Autowired
     private Environment environment;
 
-    @Bean
-    public SpringLiquibase liquibase(DataSource dataSource) {
-        SpringLiquibase liquibase = new SpringLiquibase();
-        liquibase.setChangeLog(environment.getProperty("db.liquibase.changelog"));
-        liquibase.setDataSource(dataSource);
-        return liquibase;
-    }
+//    @Bean
+//    public SpringLiquibase liquibase(DataSource dataSource) {
+//        SpringLiquibase liquibase = new SpringLiquibase();
+//        liquibase.setChangeLog(environment.getProperty("db.liquibase.changelog"));
+//        liquibase.setDataSource(dataSource);
+//        return liquibase;
+//    }
 
     @Bean
     public HikariConfig hikariConfig() {
@@ -45,7 +46,7 @@ public class DatabaseConfig {
         hikariConfig.setUsername(environment.getProperty("db.user"));
         hikariConfig.setPassword(environment.getProperty("db.password"));
         hikariConfig.setDriverClassName(environment.getProperty("db.driver-class-name"));
-        hikariConfig.setMaximumPoolSize(Integer.parseInt(environment.getProperty("db.hikari.max-pool-size")));
+        hikariConfig.setMaximumPoolSize(Integer.parseInt(Objects.requireNonNull(environment.getProperty("db.hikari.max-pool-size"))));
         return hikariConfig;
     }
 

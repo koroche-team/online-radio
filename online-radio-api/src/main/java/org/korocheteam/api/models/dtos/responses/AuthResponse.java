@@ -1,4 +1,4 @@
-package org.korocheteam.api.models.dtos;
+package org.korocheteam.api.models.dtos.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SignupRequest {
-    private String nickname;
-    private String email;
-    private String password;
+public class AuthResponse {
+    private String token;
 }
