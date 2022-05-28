@@ -26,34 +26,7 @@ public class SignUpController {
     private final SignUpService signUpService;
 
     @PostMapping
-    public ResponseEntity<?> signUp(@RequestBody @Valid SignUpRequest request, BindingResult result) {
-        //костыль потому что хендлер не отлавливает ошибку надо как-то фиксить
-        if (result.hasErrors()) {
-            List<ValidationErrorDto> validationErrorDtos = new ArrayList<>();
-
-            result.getAllErrors().forEach(objectError -> {
-                String errorMessage = objectError.getDefaultMessage();
-                ValidationErrorDto errorDto = ValidationErrorDto.builder()
-                        .message(errorMessage)
-                        .build();
-
-                if (objectError instanceof FieldError) {
-                    String fieldName = ((FieldError) objectError).getField();
-                    errorDto.setField(fieldName);
-                } else if (objectError instanceof ObjectError) {
-                    String objectName = objectError.getObjectName();
-                    errorDto.setObject(objectName);
-                }
-                validationErrorDtos.add(errorDto);
-            });
-
-
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(ValidationExceptionResponse.builder()
-                            .errors(validationErrorDtos)
-                            .build());
-        }
-
+    public ResponseEntity<?> signUp(@Valid @RequestBody SignUpRequest request) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(signUpService.signUp(request));
