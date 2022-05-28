@@ -17,8 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
 
-import static org.korocheteam.api.security.SecurityConfig.LOGIN_FILTER_PROCESS_URL;
-import static org.korocheteam.api.security.SecurityConfig.SIGNUP_URL;
+import static org.korocheteam.api.security.SecurityConfig.*;
 
 @RequiredArgsConstructor
 public class TokenAuthorizationFilter extends OncePerRequestFilter {
@@ -30,7 +29,9 @@ public class TokenAuthorizationFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 		try {
-			if (request.getRequestURI().startsWith(SIGNUP_URL) || request.getRequestURI().startsWith(LOGIN_FILTER_PROCESS_URL)) {
+			if (request.getRequestURI().startsWith(SIGNUP_URL) ||
+					request.getRequestURI().startsWith(STATUS_URL) ||
+					request.getRequestURI().startsWith(LOGIN_FILTER_PROCESS_URL)) {
 				filterChain.doFilter(request, response);
 				return;
 			}

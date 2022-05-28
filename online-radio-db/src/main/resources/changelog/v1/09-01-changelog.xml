@@ -12,7 +12,7 @@
             </column>
             <column name="email" type="VARCHAR(255)"/>
             <column name="nickname" type="VARCHAR(255)"/>
-            <column name="password" type="VARCHAR(255)"/>
+            <column name="hashPassword" type="VARCHAR(255)"/>
             <column name="role" type="VARCHAR(255)"/>
             <column name="state" type="VARCHAR(255)"/>
             <column name="token" type="VARCHAR(255)"/>

@@ -27,4 +27,6 @@ public class Song {
 	private String album;
 
 	private String cover;
+
+	private String path;
 }

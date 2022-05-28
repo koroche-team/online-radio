@@ -30,8 +30,6 @@ public class TokenUsernamePasswordAuthenticationFilter extends UsernamePasswordA
     private final JwtTokenUtil jwtTokenUtil;
     private final AccountsRepository accountsRepository;
 
-
-
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/signUp")
+@RequestMapping("/signup")
 @RequiredArgsConstructor
 public class SignUpController {
 

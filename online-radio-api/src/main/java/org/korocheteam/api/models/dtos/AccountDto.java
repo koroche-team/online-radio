@@ -14,13 +14,9 @@ public class AccountDto {
 	private Long id;
 	private String email;
 	private String nickname;
-	private String password;
-	private String state;
-	private String role;
 
 	public static AccountDto from(Account account) {
 		return AccountDto.builder()
-				.password(account.getHashPassword())
 				.id(account.getId())
 				.email(account.getEmail())
 				.nickname(account.getNickname())

@@ -27,6 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public static final String LOGIN_FILTER_PROCESS_URL = API_URL + "/login";
 	public static final String SIGNUP_URL = API_URL + "/signup";
 
+	public static final String STATUS_URL = API_URL + "/status";
+
 	@Autowired
 	private AccountsRepository accountsRepository;
 
