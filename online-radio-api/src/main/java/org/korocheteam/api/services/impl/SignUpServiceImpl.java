@@ -29,6 +29,7 @@ public class SignUpServiceImpl implements SignUpService {
                 .hashPassword(passwordEncoder.encode(signupRequest.getPassword()))
                 .role(Account.Role.USER)
                 .state(Account.State.CONFIRMED)
+                .score(0)
                 .build();
 
 

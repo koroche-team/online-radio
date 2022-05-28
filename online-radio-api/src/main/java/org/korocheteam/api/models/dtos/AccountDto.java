@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.korocheteam.api.models.Account;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,5 +26,11 @@ public class AccountDto {
 				.nickname(account.getNickname())
 				.score(account.getScore())
 				.build();
+	}
+
+	public static List<AccountDto> from(List<Account> accounts) {
+		return accounts.stream()
+				.map(AccountDto::from)
+				.collect(Collectors.toList());
 	}
 }
