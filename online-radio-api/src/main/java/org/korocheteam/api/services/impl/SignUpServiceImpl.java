@@ -1,4 +1,4 @@
-package org.korocheteam.api.services;
+package org.korocheteam.api.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.korocheteam.api.exceptions.AccountAlreadyExistsException;
@@ -7,6 +7,7 @@ import org.korocheteam.api.models.dtos.AccountDto;
 import org.korocheteam.api.models.dtos.requests.SignUpRequest;
 import org.korocheteam.api.models.dtos.responses.SignUpResponse;
 import org.korocheteam.api.repositories.AccountsRepository;
+import org.korocheteam.api.services.SignUpService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class SignUpServiceImpl implements SignUpService{
+public class SignUpServiceImpl implements SignUpService {
     private final AccountsRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
 
