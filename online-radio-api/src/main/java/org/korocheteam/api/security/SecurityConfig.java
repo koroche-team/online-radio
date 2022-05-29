@@ -67,7 +67,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/**").authenticated()
 				.antMatchers(SCORE_URL).authenticated()
 				.antMatchers(LEADERBOARD_URL).authenticated()
-				.antMatchers(PROFILE_URL + "/**").authenticated();
+				.antMatchers(PROFILE_URL + "/**").authenticated()
+				.antMatchers("/weather/**").authenticated();
 
 
 		UsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter = new TokenUsernamePasswordAuthenticationFilter( objectMapper(), jwtTokenUtil, accountsRepository);
