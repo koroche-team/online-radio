@@ -2,7 +2,6 @@ package org.korocheteam.api.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +22,7 @@ import java.util.Objects;
 import java.util.Properties;
 
 @Configuration
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:application-dev.properties")
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "org.korocheteam.api.repositories")
 public class DatabaseConfig {
@@ -31,6 +30,7 @@ public class DatabaseConfig {
     @Autowired
     private Environment environment;
 
+    // TODO: enable liquibase later
 //    @Bean
 //    public SpringLiquibase liquibase(DataSource dataSource) {
 //        SpringLiquibase liquibase = new SpringLiquibase();

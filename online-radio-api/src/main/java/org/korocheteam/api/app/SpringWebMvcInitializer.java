@@ -6,26 +6,6 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 public class SpringWebMvcInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-
-
-//	@Override
-//	public void onStartup(javax.servlet.ServletContext servletContext) throws ServletException {
-//		AnnotationConfigWebApplicationContext webApplicationContext = new AnnotationConfigWebApplicationContext();
-//		webApplicationContext.register(AppConfig.class);
-//		webApplicationContext.register(SecurityConfig.class);
-//		webApplicationContext.register(DatabaseConfig.class);
-//
-//		ContextLoaderListener contextLoaderListener = new ContextLoaderListener(webApplicationContext);
-//
-//		servletContext.addListener(contextLoaderListener);
-//
-//		ServletRegistration.Dynamic dispatcherServlet = servletContext.addServlet(
-//				"dispatcher", new DispatcherServlet(webApplicationContext));
-//		dispatcherServlet.setLoadOnStartup(1);
-//		dispatcherServlet.addMapping("/");
-//
-//	}
-
 	@Override
 	protected String[] getServletMappings() {
 		return new String[] {"/"};
