@@ -26,8 +26,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	public static final String LOGIN_FILTER_PROCESS_URL = API_URL + "/login";
 	public static final String SIGNUP_URL = API_URL + "/signup";
-
 	public static final String STATUS_URL = API_URL + "/status";
+	public static final String SCORE_URL = API_URL + "/score";
+	public static final String LEADERBOARD_URL = API_URL + "/leaderboard";
 
 	@Autowired
 	private AccountsRepository accountsRepository;
@@ -62,7 +63,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(SIGNUP_URL).permitAll()
 				.antMatchers(LOGIN_FILTER_PROCESS_URL).permitAll()
 				.antMatchers("/status/**").permitAll()
-				.antMatchers("/**").authenticated();
+				.antMatchers("/**").authenticated()
+				.antMatchers(SCORE_URL).authenticated()
+				.antMatchers(LEADERBOARD_URL).authenticated();
 
 
 		UsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter = new TokenUsernamePasswordAuthenticationFilter( objectMapper(), jwtTokenUtil, accountsRepository);

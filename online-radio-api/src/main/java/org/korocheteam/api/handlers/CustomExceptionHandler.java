@@ -1,7 +1,9 @@
 package org.korocheteam.api.handlers;
 
 import org.korocheteam.api.exceptions.AccountAlreadyExistsException;
+import org.korocheteam.api.exceptions.AccountNotExistsException;
 import org.korocheteam.api.models.dtos.ValidationErrorDto;
+import org.korocheteam.api.models.dtos.responses.AccountExceptionResponse;
 import org.korocheteam.api.models.dtos.responses.ValidationExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +20,9 @@ import java.util.List;
 public class CustomExceptionHandler {
 
 	@ExceptionHandler(AccountAlreadyExistsException.class)
-	public ResponseEntity<?> handleAccountAlreadyExists(AccountAlreadyExistsException exception) {
+	public ResponseEntity<AccountExceptionResponse> handleAccountAlreadyExists(AccountAlreadyExistsException exception) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-				.body(exception.getMessage());
+				.body(AccountExceptionResponse.builder().message(exception.getMessage()).build());
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -50,5 +52,10 @@ public class CustomExceptionHandler {
 						.build());
 	}
 
+	@ExceptionHandler(AccountNotExistsException.class)
+	public ResponseEntity<AccountExceptionResponse> handleAccountNotExists(AccountNotExistsException exception) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+				.body(AccountExceptionResponse.builder().message(exception.getMessage()).build());
+	}
 
 }
