@@ -1,6 +1,7 @@
 version: '3.1'
 
 services:
+
   icecast:
     image: infiniteproject/icecast
     ports:
@@ -9,8 +10,25 @@ services:
       ICECAST_SOURCE_PASSWORD: qwerty
       ICECAST_HOSTNAME: online-radio
 
+  postgres:
+    image: postgres:11-alpine
+    restart: always
+    hostname: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: qwerty
+      POSTGRES_DB: online-radio
+      POSTGRES_INITDB_ARGS: "-A md5"
+    ports:
+      - "5432:5432"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8081:8080"
+
   online-radio-api:
     build: ./online-radio-api
-    image: onlineradio.azurecr.io/online-radio-api
     ports:
       - "8080:8080"
