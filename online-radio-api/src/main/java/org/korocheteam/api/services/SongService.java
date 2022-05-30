@@ -27,7 +27,8 @@ public class SongService {
             songIterator = page.iterator();
         }
         if (!songIterator.hasNext()) {
-            if (page.getNumber() == page.getTotalPages()) {
+            System.out.println(page.getNumber());
+            if (page.getNumber() ==  page.getTotalPages()-1) {
                 pageRequest = pageRequest.first();
             } else {
                 pageRequest = pageRequest.next();

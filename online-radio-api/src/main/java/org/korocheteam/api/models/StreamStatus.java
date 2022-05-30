@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class StreamStatus {
     private Song currentSong;
-    private Integer time;
-    private Integer activeListeners;
+    private Long length;
+    private Long time;
 }

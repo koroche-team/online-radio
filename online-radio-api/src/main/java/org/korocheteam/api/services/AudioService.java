@@ -32,6 +32,8 @@ import java.util.stream.Stream;
 @Slf4j
 @RequiredArgsConstructor
 public class AudioService {
+    @Value("${icecast.host}")
+    private String icecastHost;
     @Value("${icecast.password}")
     private String icecastPassword;
     @Value("${icecast.mount}")
@@ -44,7 +46,7 @@ public class AudioService {
         new Thread(() -> {
             try (Libshout icecast = new Libshout()) {
                 byte[] buffer = new byte[1024];
-                icecast.setHost("localhost");
+                icecast.setHost(icecastHost);
                 icecast.setPort(8000);
                 icecast.setProtocol(Libshout.PROTOCOL_HTTP);
                 icecast.setPassword(icecastPassword);
@@ -57,21 +59,21 @@ public class AudioService {
                     try {
                         Song song = songService.getNextSong();
                         AudioInputStream mp3 = AudioSystem.getAudioInputStream(new File(song.getPath()));
-                        log.error(mp3.getFormat().properties().toString());
                         streamStatus.setCurrentSong(song);
-                        streamStatus.setTime(0);
+                        streamStatus.setLength(Math.round(2.0 * mp3.available() / mp3.getFormat().getFrameRate()));
+                        streamStatus.setTime(0L);
                         log.info("Playing " + song);
                         int read = mp3.read(buffer);
                         while (read > 0) {
-                            double currentTime = 1000.0 * mp3.available()/ mp3.getFrameLength() / mp3.getFormat().getFrameRate();
-                            streamStatus.setTime((int) currentTime);
+                            double currentTime = streamStatus.getLength() - 2.0 * mp3.available() / mp3.getFormat().getFrameRate();
+                            streamStatus.setTime(Math.round(currentTime));
                             icecast.send(buffer, read);
                             read = mp3.read(buffer);
                         }
                     } catch (UnsupportedAudioFileException e) {
-                        log.error("Audio is not supported");
+                        log.error("Audio is not supported", e);
                     } catch (IOException e) {
-                        throw new AudioServiceException("Unable to open file or send audio to server");
+                        log.error("Unable to open file or send audio to server", e);
                     }
                 }
             } catch (IOException e) {

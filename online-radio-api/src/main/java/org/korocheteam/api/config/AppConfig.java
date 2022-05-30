@@ -9,7 +9,8 @@ import org.springframework.context.annotation.*;
 
 @Configuration
 @ComponentScan("org.korocheteam.api")
-@PropertySource("classpath:application-dev.properties")
+// TODO: use profiles
+@PropertySource("classpath:application-production.properties")
 @Import({DatabaseConfig.class, SecurityConfig.class})
 public class AppConfig {
 

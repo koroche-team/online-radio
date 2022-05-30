@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+  icecast:
+    image: infiniteproject/icecast
+    ports:
+      - "8000:8000"
+    environment:
+      ICECAST_SOURCE_PASSWORD: qwerty
+      ICECAST_HOSTNAME: online-radio
+
+  online-radio-api:
+    build: ./online-radio-api
+    image: onlineradio.azurecr.io/online-radio-api
+    ports:
+      - "8080:8080"

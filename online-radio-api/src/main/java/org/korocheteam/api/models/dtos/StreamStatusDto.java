@@ -12,12 +12,14 @@ import org.korocheteam.api.models.StreamStatus;
 @Builder
 public class StreamStatusDto {
     private SongDto songDto;
-    private Integer time;
+    private Long length;
+    private Long time;
 
     public static StreamStatusDto from(StreamStatus status) {
         return StreamStatusDto.builder()
                 .songDto(SongDto.from(status.getCurrentSong()))
                 .time(status.getTime())
+                .length(status.getLength())
                 .build();
     }
 }

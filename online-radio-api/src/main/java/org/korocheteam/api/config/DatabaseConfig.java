@@ -22,7 +22,7 @@ import java.util.Objects;
 import java.util.Properties;
 
 @Configuration
-@PropertySource("classpath:application-dev.properties")
+@PropertySource("classpath:application-production.properties")
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "org.korocheteam.api.repositories")
 public class DatabaseConfig {
