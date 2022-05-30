@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 
 import static org.korocheteam.api.security.SecurityConfig.*;
@@ -31,7 +32,7 @@ public class TokenAuthorizationFilter extends OncePerRequestFilter {
 		try {
 			if (request.getRequestURI().startsWith(SIGNUP_URL) ||
 					request.getRequestURI().startsWith(STATUS_URL) ||
-					request.getRequestURI().startsWith(SWAGGER_URL) ||
+					Arrays.stream(SWAGGER_URLS).anyMatch(request.getRequestURI()::startsWith) ||
 					request.getRequestURI().startsWith(LOGIN_FILTER_PROCESS_URL)) {
 				filterChain.doFilter(request, response);
 				return;

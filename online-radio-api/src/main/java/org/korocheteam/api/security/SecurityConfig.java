@@ -30,7 +30,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public static final String SCORE_URL = API_URL + "/score";
 	public static final String LEADERBOARD_URL = API_URL + "/leaderboard";
 	public static final String PROFILE_URL = API_URL + "/profile";
-	public static final String SWAGGER_URL = "/swagger-ui.html";
+
+	public static final String[] SWAGGER_ANT_URLS = {
+			"/swagger-resources/**",
+			"/configuration/**",
+			"/swagger-ui.html",
+			"/v2/api-docs",
+			"/webjars/**"
+	};
+
+	public static final String[] SWAGGER_URLS = {
+			"/swagger-resources/",
+			"/configuration",
+			"/swagger-ui.html",
+			"/v2/api-docs",
+			"/webjars/"
+	};
 
 	@Autowired
 	private AccountsRepository accountsRepository;
@@ -65,7 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(SIGNUP_URL).permitAll()
 				.antMatchers(LOGIN_FILTER_PROCESS_URL).permitAll()
 				.antMatchers("/status/**").permitAll()
-				.antMatchers(SWAGGER_URL).permitAll()
+				.antMatchers(SWAGGER_ANT_URLS).permitAll()
 				.antMatchers(SCORE_URL).authenticated()
 				.antMatchers(LEADERBOARD_URL).authenticated()
 				.antMatchers(PROFILE_URL + "/**").authenticated()
