@@ -1,5 +1,9 @@
 GET http://localhost:8080/weather/moscow
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZUBtYWlsLmNvbSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiVVNFUiJ9XSwiaXNzIjoib25saW5lLXJhZGlvIiwiaWF0IjoxNjUzOTE2MjUwLCJleHAiOjE2NTQ3ODAyNTB9.qEx0w0QR-WMWVdogxKY02dVM5gSsq2OVwoERaps_98w
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZUBtYWlsLmNvbSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiVVNFUiJ9XSwiaXNzIjoib25saW5lLXJhZGlvIiwiaWF0IjoxNjUzOTE3MTI5LCJleHAiOjE2NTQ3ODExMjl9.abSL5g4Xq3qnYcVp8ASDHc4OhEpBpxdt7Xl0_m56anM
+
+###
+
+GET http://localhost:8080/src/main/resources/swagger-ui.html
 
 ###
 POST http://localhost:8080/signup

@@ -5,3 +5,5 @@
 /**/out/
 /online-radio-api/covers/*
 !/online-radio-api/covers/.gitignore
+/online-radio-api/src/main/resources/application-dev.properties
+/online-radio-api/src/main/resources/application-production.properties

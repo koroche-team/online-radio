@@ -29,6 +29,7 @@ public class AppConfig {
     @Autowired
     private SongService songService;
 
+    // TODO: fix swagger page
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
