@@ -27,6 +27,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -125,6 +126,7 @@ public class AudioService {
                     .artist(tag.getFirst(FieldKey.ARTIST))
                     .path(path.toString())
                     .cover(pathToCover)
+                    .likes(Collections.emptyList())
                     .build();
 
             if (songService.doesExists(song)) {

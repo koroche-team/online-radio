@@ -3,6 +3,9 @@ package org.korocheteam.api.services;
 import lombok.RequiredArgsConstructor;
 import org.korocheteam.api.exceptions.SongNotFoundException;
 import org.korocheteam.api.models.Song;
+import org.korocheteam.api.models.dtos.SongDto;
+import org.korocheteam.api.models.dtos.responses.TopSongsResponse;
+import org.korocheteam.api.repositories.LikeRepository;
 import org.korocheteam.api.repositories.SongRepository;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -10,7 +13,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +25,8 @@ public class SongService {
     private Iterator<Song> songIterator;
     private Page<Song> page;
     private Pageable pageRequest;
+
+    private final LikeRepository likeRepository;
 
     public Song getNextSong() {
         if (songIterator == null) {
@@ -50,6 +58,15 @@ public class SongService {
 
     public void cleanRepository() {
         songRepository.deleteAll();
+    }
+
+    public TopSongsResponse getTopTenSongs() {
+        List<SongDto> songs = SongDto.from(songRepository.findAll());
+        songs.sort(Comparator.comparingInt(SongDto::getAmountOfLikes).reversed());
+
+        return TopSongsResponse.builder()
+                .songs(songs.stream().limit(10).collect(Collectors.toList()))
+                .build();
     }
 
 }

@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.korocheteam.api.models.Song;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,6 +25,8 @@ public class SongDto {
 
     private String cover;
 
+    private Integer amountOfLikes;
+
     public static SongDto from(Song song) {
         return SongDto.builder()
                 .id(song.getId())
@@ -29,6 +34,13 @@ public class SongDto {
                 .title(song.getTitle())
                 .album(song.getAlbum())
                 .cover(song.getCover())
+                .amountOfLikes(song.getLikes().size())
                 .build();
+    }
+
+    public static List<SongDto> from(List<Song> songs) {
+        return songs.stream()
+                .map(SongDto::from)
+                .collect(Collectors.toList());
     }
 }

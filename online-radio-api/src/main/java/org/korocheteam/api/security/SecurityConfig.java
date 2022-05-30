@@ -30,6 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public static final String SCORE_URL = API_URL + "/score";
 	public static final String LEADERBOARD_URL = API_URL + "/leaderboard";
 	public static final String PROFILE_URL = API_URL + "/profile";
+	public static final String LIKES_URL = API_URL + "/likes";
+	public static final String SONGS_URL = API_URL + "/songs";
 
 	public static final String[] SWAGGER_ANT_URLS = {
 			"/swagger-resources/**",
@@ -84,6 +86,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(SCORE_URL).authenticated()
 				.antMatchers(LEADERBOARD_URL).authenticated()
 				.antMatchers(PROFILE_URL + "/**").authenticated()
+				.antMatchers(LIKES_URL).authenticated()
+				.antMatchers(SONGS_URL + "/**").authenticated()
 				.antMatchers("/weather/**").authenticated()
 				.antMatchers("/**").authenticated();
 
