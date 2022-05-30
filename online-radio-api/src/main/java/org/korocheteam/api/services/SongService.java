@@ -48,4 +48,8 @@ public class SongService {
         return songRepository.exists(Example.of(song));
     }
 
+    public void cleanRepository() {
+        songRepository.deleteAll();
+    }
+
 }

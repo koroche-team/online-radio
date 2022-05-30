@@ -1,14 +1,14 @@
-GET http://localhost:8080/test
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQG1haWwuY29tIiwic2NvcGVzIjpbeyJhdXRob3JpdHkiOiJVU0VSIn1dLCJpc3MiOiJvbmxpbmUtcmFkaW8iLCJpYXQiOjE2NTMyMzE1OTksImV4cCI6MTY1NDA5NTU5OX0.BJJmWlcxadlehc3GKRWGiONuN_4Lpru8RwN46nG7qnk
+GET http://localhost:8080/weather/moscow
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZUBtYWlsLmNvbSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiVVNFUiJ9XSwiaXNzIjoib25saW5lLXJhZGlvIiwiaWF0IjoxNjUzOTE2MjUwLCJleHAiOjE2NTQ3ODAyNTB9.qEx0w0QR-WMWVdogxKY02dVM5gSsq2OVwoERaps_98w
 
 ###
 POST http://localhost:8080/signup
 Content-Type: application/json
 
 {
-  "nickname": "u",
-  "email": "usernamm",
-  "password": "q"
+  "nickname": "username",
+  "email": "username@mail.com",
+  "password": "qwerty007"
 }
 
 ###
@@ -17,7 +17,7 @@ Content-Type: application/json
 
 {
   "email": "username@mail.com",
-  "password": "qwerty"
+  "password": "qwerty007"
 }
 
 ###

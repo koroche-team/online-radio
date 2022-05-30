@@ -3,3 +3,5 @@
 /.jpb/
 /**/build/
 /**/out/
+/online-radio-api/covers/*
+!/online-radio-api/covers/.gitignore

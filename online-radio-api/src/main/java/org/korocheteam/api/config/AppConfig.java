@@ -17,12 +17,15 @@ public class AppConfig {
     @Value("${audio.path}")
     private String audioPath;
 
+    @Value("${covers.path}")
+    private String coversPath;
+
     @Autowired
     private SongService songService;
 
     @Bean
     public AudioService audioService() {
-        AudioService audioService = new AudioService(songService, audioPath);
+        AudioService audioService = new AudioService(songService, audioPath, coversPath);
         audioService.updateMusicList();
         audioService.runAudioStream();
         return audioService;

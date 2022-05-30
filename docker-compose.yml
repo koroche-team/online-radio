@@ -4,11 +4,11 @@ services:
 
   icecast:
     image: infiniteproject/icecast
-    ports:
-      - "8000:8000"
     environment:
       ICECAST_SOURCE_PASSWORD: qwerty
       ICECAST_HOSTNAME: online-radio
+    ports:
+      - "8000:8000"
 
   postgres:
     image: postgres:11-alpine

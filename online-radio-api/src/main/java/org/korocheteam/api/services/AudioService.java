@@ -47,9 +47,7 @@ public class AudioService {
     private volatile StreamStatus streamStatus;
 
     private final String audioPath;
-
-    @Value("${covers.path}")
-    private String coversPath;
+    private final String coversPath;
 
     public void runAudioStream() {
         new Thread(() -> {
@@ -96,6 +94,7 @@ public class AudioService {
     }
 
     public void updateMusicList() {
+        songService.cleanRepository();
         try {
             Set<Path> fileList = listFiles(audioPath);
             for (Path filePath: fileList) {
@@ -117,10 +116,9 @@ public class AudioService {
 
             Artwork cover = tag.getFirstArtwork();
             BufferedImage image = cover.getImage();
-            String pathToCover = coversPath + "/" + UUID.randomUUID();
+            String pathToCover = coversPath + "/" + UUID.randomUUID() + ".jpg";
             ImageIO.write(image, "jpg", new File(pathToCover));
 
-            // TODO: add cover
             Song song = Song.builder()
                     .title(tag.getFirst(FieldKey.TITLE))
                     .album(tag.getFirst(FieldKey.ALBUM))
