@@ -96,14 +96,13 @@ public class AudioService {
     }
 
     public void updateMusicList() {
-        songService.cleanRepository();
         try {
             Set<Path> fileList = listFiles(audioPath);
             for (Path filePath: fileList) {
                 try {
                     addTrack(filePath);
                 } catch (AudioServiceException e) {
-                    log.error("Unable to add track at " + filePath.toAbsolutePath());;
+                    log.error("Unable to add track at " + filePath.toAbsolutePath());
                 }
             }
         } catch (IOException e) {
