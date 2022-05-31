@@ -13,7 +13,7 @@ import java.util.Objects;
 @ToString
 @Builder
 @Entity
-public class Like {
+public class SongLike {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +31,7 @@ public class Like {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-		Like like = (Like) o;
+		SongLike like = (SongLike) o;
 		return id != null && Objects.equals(id, like.id);
 	}
 

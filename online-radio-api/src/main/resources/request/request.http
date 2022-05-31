@@ -1,5 +1,5 @@
 GET http://localhost:8080/weather/moscow
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZUBtYWlsLmNvbSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiVVNFUiJ9XSwiaXNzIjoib25saW5lLXJhZGlvIiwiaWF0IjoxNjUzOTE3MTI5LCJleHAiOjE2NTQ3ODExMjl9.abSL5g4Xq3qnYcVp8ASDHc4OhEpBpxdt7Xl0_m56anM
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZUBtYWlsLmNvbSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiVVNFUiJ9XSwiaXNzIjoib25saW5lLXJhZGlvIiwiaWF0IjoxNjUzOTkyODQ3LCJleHAiOjE2NTQ4NTY4NDd9.ogLjFdWpfJoJ-5TT_V9lSPm45G7y_RIo5G-SHlUWQcM
 
 ###
 
@@ -30,3 +30,13 @@ Content-Type: application/json
 
 ###
 GET https://api.openweathermap.org/data/2.5/weather?q=moscow&appid=d64cde12deca23990a6e956bf65b16aa
+
+### Like song
+POST http://localhost:8080/likes
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZUBtYWlsLmNvbSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiVVNFUiJ9XSwiaXNzIjoib25saW5lLXJhZGlvIiwiaWF0IjoxNjUzOTkzMjUzLCJleHAiOjE2NTQ4NTcyNTN9.9XBNyc9Ea6G_T5yO3NzJLdFmaIq4yUmFNjGiBzQbuW4
+Content-Type: application/json
+
+{
+  "email": "username@mail.com",
+  "songId": 8
+}

@@ -2,10 +2,10 @@ package org.korocheteam.api.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.korocheteam.api.exceptions.AccountNotExistsException;
-import org.korocheteam.api.exceptions.SongAlreadyLiked;
+import org.korocheteam.api.exceptions.SongAlreadyLikedException;
 import org.korocheteam.api.exceptions.SongNotFoundException;
 import org.korocheteam.api.models.Account;
-import org.korocheteam.api.models.Like;
+import org.korocheteam.api.models.SongLike;
 import org.korocheteam.api.models.Song;
 import org.korocheteam.api.models.dtos.requests.LikeSongRequest;
 import org.korocheteam.api.models.dtos.responses.LikeSongResponse;
@@ -29,9 +29,9 @@ public class LikeServiceImpl implements LikeService {
 
 	@Override
 	public LikeSongResponse likeSong(LikeSongRequest request) {
-		Optional<Like> likeFromDB = likeRepository.findByAccountEmailAndSongId(request.getEmail(), request.getSongId());
+		Optional<SongLike> likeFromDB = likeRepository.findByAccountEmailAndSongId(request.getEmail(), request.getSongId());
 		if (likeFromDB.isPresent()) {
-			throw new SongAlreadyLiked();
+			throw new SongAlreadyLikedException();
 		}
 
 		Optional<Song> songFromDB = songRepository.findById(request.getSongId());
@@ -44,12 +44,12 @@ public class LikeServiceImpl implements LikeService {
 			throw new AccountNotExistsException("account with email " + request.getEmail() + " not exists");
 		}
 
-		Like like = Like.builder()
+		SongLike like = SongLike.builder()
 				.song(songFromDB.get())
 				.account(accountFromDB.get())
 				.build();
 
-		Like savedLike = likeRepository.save(like);
+		SongLike savedLike = likeRepository.save(like);
 
 		songFromDB.get().getLikes().add(savedLike);
 

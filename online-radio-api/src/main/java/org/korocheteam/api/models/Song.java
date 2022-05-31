@@ -31,7 +31,7 @@ public class Song {
 
 	@OneToMany(mappedBy = "song")
 	@ToString.Exclude
-	private List<Like> likes;
+	private List<SongLike> likes;
 
 	@Override
 	public boolean equals(Object o) {

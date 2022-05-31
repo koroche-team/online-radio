@@ -73,6 +73,7 @@ public class AudioService {
                         log.info("Playing " + song);
                         int read = mp3.read(buffer);
                         while (read > 0) {
+                            // TODO: update likes status
                             double currentTime = streamStatus.getLength() - 2.0 * mp3.available() / mp3.getFormat().getFrameRate();
                             streamStatus.setTime(Math.round(currentTime));
                             icecast.send(buffer, read);

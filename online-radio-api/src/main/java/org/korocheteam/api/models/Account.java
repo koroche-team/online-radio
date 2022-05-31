@@ -43,7 +43,7 @@ public class Account {
 
 	@OneToMany(mappedBy = "account")
 	@ToString.Exclude
-	private List<Like> likes;
+	private List<SongLike> likes;
 
 	@Override
 	public boolean equals(Object o) {
