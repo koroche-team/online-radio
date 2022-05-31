@@ -2,7 +2,7 @@ package org.korocheteam.api.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.korocheteam.api.exceptions.AccountNotExistsException;
-import org.korocheteam.api.exceptions.SongAlreadyLiked;
+import org.korocheteam.api.exceptions.SongAlreadyLikedException;
 import org.korocheteam.api.exceptions.SongNotFoundException;
 import org.korocheteam.api.models.Account;
 import org.korocheteam.api.models.Like;
@@ -31,7 +31,7 @@ public class LikeServiceImpl implements LikeService {
 	public LikeSongResponse likeSong(LikeSongRequest request) {
 		Optional<Like> likeFromDB = likeRepository.findByAccountEmailAndSongId(request.getEmail(), request.getSongId());
 		if (likeFromDB.isPresent()) {
-			throw new SongAlreadyLiked();
+			throw new SongAlreadyLikedException();
 		}
 
 		Optional<Song> songFromDB = songRepository.findById(request.getSongId());

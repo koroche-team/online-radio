@@ -2,8 +2,10 @@ package org.korocheteam.api.handlers;
 
 import org.korocheteam.api.exceptions.AccountAlreadyExistsException;
 import org.korocheteam.api.exceptions.AccountNotExistsException;
+import org.korocheteam.api.exceptions.SongAlreadyLikedException;
 import org.korocheteam.api.models.dtos.ValidationErrorDto;
 import org.korocheteam.api.models.dtos.responses.AccountExceptionResponse;
+import org.korocheteam.api.models.dtos.responses.LikeSongExceptionResponse;
 import org.korocheteam.api.models.dtos.responses.ValidationExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +58,12 @@ public class CustomExceptionHandler {
 	public ResponseEntity<AccountExceptionResponse> handleAccountNotExists(AccountNotExistsException exception) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 				.body(AccountExceptionResponse.builder().message(exception.getMessage()).build());
+	}
+
+	@ExceptionHandler(SongAlreadyLikedException.class)
+	public ResponseEntity<LikeSongExceptionResponse> handleSongAlreadyLiked(SongAlreadyLikedException exception) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+				.body(LikeSongExceptionResponse.builder().message(exception.getMessage()).build());
 	}
 
 }
