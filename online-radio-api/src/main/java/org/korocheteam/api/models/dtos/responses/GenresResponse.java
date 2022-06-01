@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.korocheteam.api.models.dtos.SongDto;
 
 import java.util.List;
 
@@ -14,8 +13,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ApiModel("representation of top songs")
-public class TopSongsResponse {
-	@ApiModelProperty(value = "list of top songs")
-	private List<SongDto> songs;
+@ApiModel("response for getting genres")
+public class GenresResponse {
+	@ApiModelProperty("list of genres")
+	private List<String> genres;
 }

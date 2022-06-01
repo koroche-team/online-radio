@@ -1,5 +1,6 @@
 package org.korocheteam.api.models.dtos;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ApiModel("representation of account")
 public class AccountDto {
 	private Long id;
 	private String email;

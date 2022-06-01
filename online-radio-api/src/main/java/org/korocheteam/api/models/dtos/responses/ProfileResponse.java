@@ -1,5 +1,6 @@
 package org.korocheteam.api.models.dtos.responses;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +11,7 @@ import org.korocheteam.api.models.dtos.AccountDto;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ApiModel("response for profile")
 public class ProfileResponse {
 	private AccountDto profile;
 }

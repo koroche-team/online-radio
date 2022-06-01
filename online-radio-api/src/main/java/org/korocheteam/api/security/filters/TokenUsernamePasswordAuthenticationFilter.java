@@ -11,6 +11,7 @@ import org.korocheteam.api.repositories.AccountsRepository;
 import org.korocheteam.api.security.details.AccountUserDetails;
 import org.korocheteam.api.security.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,6 +24,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -70,6 +73,12 @@ public class TokenUsernamePasswordAuthenticationFilter extends UsernamePasswordA
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        throw new LoginException();
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+
+        Map<String, String> data = new HashMap<>();
+
+        data.put("message", failed.getMessage());
+
+        response.getWriter().write(objectMapper.writeValueAsString(data));
     }
 }

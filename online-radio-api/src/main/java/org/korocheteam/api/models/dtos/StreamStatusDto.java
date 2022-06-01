@@ -1,5 +1,7 @@
 package org.korocheteam.api.models.dtos;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,9 +12,15 @@ import org.korocheteam.api.models.StreamStatus;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ApiModel("representation of audio stream status")
 public class StreamStatusDto {
+    @ApiModelProperty(value = "song itself")
     private SongDto songDto;
+
+    @ApiModelProperty(value = "length of current song in millis")
     private Long length;
+
+    @ApiModelProperty(value = "current time of song in millis")
     private Long time;
 
     public static StreamStatusDto from(StreamStatus status) {

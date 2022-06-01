@@ -29,15 +29,16 @@ public class TokenAuthorizationFilter extends OncePerRequestFilter {
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+		if (request.getRequestURI().startsWith(SIGNUP_URL) ||
+				request.getRequestURI().startsWith(STATUS_URL) ||
+				request.getRequestURI().startsWith(COVERS_URL) ||
+				Arrays.stream(SWAGGER_URLS).anyMatch(request.getRequestURI()::startsWith) ||
+				request.getRequestURI().startsWith(LOGIN_FILTER_PROCESS_URL)) {
+			filterChain.doFilter(request, response);
+			return;
+		}
+
 		try {
-			if (request.getRequestURI().startsWith(SIGNUP_URL) ||
-					request.getRequestURI().startsWith(STATUS_URL) ||
-					request.getRequestURI().startsWith(COVERS_URL) ||
-					Arrays.stream(SWAGGER_URLS).anyMatch(request.getRequestURI()::startsWith) ||
-					request.getRequestURI().startsWith(LOGIN_FILTER_PROCESS_URL)) {
-				filterChain.doFilter(request, response);
-				return;
-			}
 
 			String tokenHeader = request.getHeader("Authorization");
 			String tokenString = tokenHeader.substring("Bearer ".length());
