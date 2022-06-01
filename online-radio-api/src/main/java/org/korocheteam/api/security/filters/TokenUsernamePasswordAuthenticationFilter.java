@@ -3,6 +3,7 @@ package org.korocheteam.api.security.filters;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.korocheteam.api.exceptions.LoginException;
 import org.korocheteam.api.models.Account;
 import org.korocheteam.api.models.dtos.requests.AuthRequest;
 import org.korocheteam.api.models.dtos.responses.AuthResponse;
@@ -65,5 +66,10 @@ public class TokenUsernamePasswordAuthenticationFilter extends UsernamePasswordA
     @Autowired
     public void setAuthenticationManager(AuthenticationManager authenticationManager) {
         super.setAuthenticationManager(authenticationManager);
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        throw new LoginException();
     }
 }

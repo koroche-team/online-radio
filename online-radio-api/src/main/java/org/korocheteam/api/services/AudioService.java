@@ -2,6 +2,7 @@ package org.korocheteam.api.services;
 
 import lombok.RequiredArgsConstructor;
 import org.korocheteam.api.entities.AudioStream;
+import org.korocheteam.api.exceptions.GenreNotFoundException;
 import org.korocheteam.api.models.Genre;
 import org.korocheteam.api.models.dtos.StreamStatusDto;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,10 @@ public class AudioService {
     }
 
     public StreamStatusDto getStreamStatus(String genre) {
+        if (!streams.containsKey(Genre.valueOf(genre.toUpperCase()))) {
+            throw new GenreNotFoundException(genre);
+        }
+
         return from(streams.get(Genre.valueOf(genre.toUpperCase())).getStreamStatus());
     }
 
