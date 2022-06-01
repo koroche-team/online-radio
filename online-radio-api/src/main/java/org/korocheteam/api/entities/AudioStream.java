@@ -3,6 +3,7 @@ package org.korocheteam.api.entities;
 import com.gmail.kunicins.olegs.libshout.Libshout;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
@@ -13,10 +14,12 @@ import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.datatype.Artwork;
 import org.korocheteam.api.exceptions.AudioStreamException;
+import org.korocheteam.api.models.Cover;
+import org.korocheteam.api.models.Genre;
 import org.korocheteam.api.models.Song;
 import org.korocheteam.api.models.StreamStatus;
+import org.korocheteam.api.services.CoverService;
 import org.korocheteam.api.services.SongService;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
@@ -27,12 +30,10 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.Locale;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -41,12 +42,13 @@ public class AudioStream {
     private final String icecastPassword;
 
     private final SongService songService;
+    private final CoverService coverService;
     private volatile StreamStatus streamStatus;
 
     private final String audioPath;
     private final String coversPath;
 
-    private final Song.Genre genre;
+    private final Genre genre;
 
     public void runAudioStream() {
         new Thread(() -> {
@@ -113,14 +115,30 @@ public class AudioStream {
             MP3File audioFile = (MP3File) AudioFileIO.read(path.toFile());
             Tag tag = audioFile.getTag();
 
-            Artwork cover = tag.getFirstArtwork();
-            BufferedImage image = cover.getImage();
-            String pathToCover = coversPath + "/" + UUID.randomUUID() + ".jpg";
-            ImageIO.write(image, "jpg", new File(pathToCover));
+            // process artwork
+            Artwork artwork = tag.getFirstArtwork();
+            String coverHash = DigestUtils.md5Hex(artwork.getBinaryData());
+            Optional<Cover> foundCover = coverService.getCoverByHash(coverHash);
+            Cover cover;
+            if (foundCover.isEmpty()) {
+                UUID coverUuid = UUID.randomUUID();
+                BufferedImage image = artwork.getImage();
+                String pathToCover = coversPath + "/" + coverUuid + ".jpg";
+                ImageIO.write(image, "jpg", new File(pathToCover));
+                cover = Cover.builder()
+                        .path(pathToCover)
+                        .hash(coverHash)
+                        .uuid(coverUuid)
+                        .build();
+                coverService.saveCover(cover);
+            } else {
+                cover = foundCover.get();
+            }
 
-            String md5;
+            // process song
+            String songHash;
             try (InputStream is = new FileInputStream(path.toString())) {
-                md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(is);
+                songHash = DigestUtils.md5Hex(is);
             } catch (IOException e) {
                 throw new AudioStreamException("Unable to read song");
             }
@@ -129,10 +147,10 @@ public class AudioStream {
                     .title(tag.getFirst(FieldKey.TITLE))
                     .album(tag.getFirst(FieldKey.ALBUM))
                     .artist(tag.getFirst(FieldKey.ARTIST))
-                    .genre(Song.Genre.valueOf(tag.getFirst(FieldKey.GENRE).toUpperCase(Locale.ROOT)))
-                    .hash(md5)
+                    .genre(Genre.valueOf(tag.getFirst(FieldKey.GENRE).toUpperCase(Locale.ROOT)))
+                    .hash(songHash)
                     .path(path.toString())
-                    .cover(pathToCover)
+                    .cover(cover)
                     .likes(Collections.emptyList())
                     .build();
 

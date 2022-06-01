@@ -1,8 +1,8 @@
 package org.korocheteam.api.repositories;
 
+import org.korocheteam.api.models.Genre;
 import org.korocheteam.api.models.Song;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -15,7 +15,7 @@ public interface SongRepository extends JpaRepository<Song, Integer> {
 	Optional<Song> findById(Integer id);
 	Optional<Song> findByHash(String hash);
 
-	Page<Song> findAllByGenre(Pageable pageable, Song.Genre genre);
+	Page<Song> findAllByGenre(Pageable pageable, Genre genre);
 
-	List<Song> findAllByGenre(Song.Genre genre);
+	List<Song> findAllByGenre(Genre genre);
 }

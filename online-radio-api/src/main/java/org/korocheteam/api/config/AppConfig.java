@@ -1,9 +1,10 @@
 package org.korocheteam.api.config;
 
-import org.korocheteam.api.models.Song;
+import org.korocheteam.api.models.Genre;
 import org.korocheteam.api.security.SecurityConfig;
 import org.korocheteam.api.services.AudioService;
 import org.korocheteam.api.entities.AudioStream;
+import org.korocheteam.api.services.CoverService;
 import org.korocheteam.api.services.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,6 +41,9 @@ public class AppConfig {
     @Autowired
     private SongService songService;
 
+    @Autowired
+    private CoverService coverService;
+
     // TODO: fix swagger page
     @Bean
     public Docket api() {
@@ -51,17 +55,17 @@ public class AppConfig {
     }
 
     @Bean
-    public Map<Song.Genre, AudioStream> audioStreams() {
-        Map<Song.Genre, AudioStream> streams = new HashMap<>();
-        for(Song.Genre genre: Song.Genre.values()) {
-            AudioStream audioStream = new AudioStream(icecastHost, icecastPassword, songService, audioPath, coversPath, genre);
+    public Map<Genre, AudioStream> audioStreams() {
+        Map<Genre, AudioStream> streams = new HashMap<>();
+        for(Genre genre: Genre.values()) {
+            AudioStream audioStream = new AudioStream(icecastHost, icecastPassword, songService, coverService, audioPath, coversPath, genre);
             streams.put(genre, audioStream);
         }
         return streams;
     }
 
     @Bean
-    public AudioService audioService(Map<Song.Genre, AudioStream> audioStreams) {
+    public AudioService audioService(Map<Genre, AudioStream> audioStreams) {
         AudioService audioService = new AudioService(audioStreams);
         audioService.startStreams();
         return audioService;

@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Builder
 public class SongDto {
-    // TODO: add validation
     private Integer id;
 
     private String artist;
@@ -33,7 +32,7 @@ public class SongDto {
                 .artist(song.getArtist())
                 .title(song.getTitle())
                 .album(song.getAlbum())
-                .cover(song.getCover())
+                .cover(song.getCover().getUuid().toString())
                 .amountOfLikes(song.getLikes().size())
                 .build();
     }

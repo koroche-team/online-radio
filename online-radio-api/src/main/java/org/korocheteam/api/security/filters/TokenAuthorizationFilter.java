@@ -32,6 +32,7 @@ public class TokenAuthorizationFilter extends OncePerRequestFilter {
 		try {
 			if (request.getRequestURI().startsWith(SIGNUP_URL) ||
 					request.getRequestURI().startsWith(STATUS_URL) ||
+					request.getRequestURI().startsWith(COVERS_URL) ||
 					Arrays.stream(SWAGGER_URLS).anyMatch(request.getRequestURI()::startsWith) ||
 					request.getRequestURI().startsWith(LOGIN_FILTER_PROCESS_URL)) {
 				filterChain.doFilter(request, response);

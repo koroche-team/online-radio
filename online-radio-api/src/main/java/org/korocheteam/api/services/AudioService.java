@@ -2,7 +2,7 @@ package org.korocheteam.api.services;
 
 import lombok.RequiredArgsConstructor;
 import org.korocheteam.api.entities.AudioStream;
-import org.korocheteam.api.models.Song;
+import org.korocheteam.api.models.Genre;
 import org.korocheteam.api.models.dtos.StreamStatusDto;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import static org.korocheteam.api.models.dtos.StreamStatusDto.from;
 @Service
 @RequiredArgsConstructor
 public class AudioService {
-    public final Map<Song.Genre, AudioStream> streams;
+    public final Map<Genre, AudioStream> streams;
 
     public List<String> getGenres() {
         return streams.keySet().stream()
@@ -25,7 +25,7 @@ public class AudioService {
     }
 
     public StreamStatusDto getStreamStatus(String genre) {
-        return from(streams.get(Song.Genre.valueOf(genre.toUpperCase())).getStreamStatus());
+        return from(streams.get(Genre.valueOf(genre.toUpperCase())).getStreamStatus());
     }
 
     public void startStreams() {

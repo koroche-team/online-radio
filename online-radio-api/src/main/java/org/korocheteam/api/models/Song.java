@@ -15,10 +15,6 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 public class Song {
-	// enum used to make genre selection strict and avoid misspells
-	public enum Genre {
-		VAPORWAVE, BREAKS
-	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -29,9 +25,11 @@ public class Song {
 
 	private String album;
 
-	private String cover;
-
 	private String path;
+
+	@ManyToOne
+	@JoinColumn(name = "cover_id")
+	private Cover cover;
 
 	@Enumerated(value = EnumType.STRING)
 	private Genre genre;
