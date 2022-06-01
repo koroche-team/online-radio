@@ -39,16 +39,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/swagger-resources/**",
 			"/configuration/**",
 			"/swagger-ui.html",
-			"/v2/api-docs",
+			"/v2/**",
 			"/webjars/**"
 	};
 
 	public static final String[] SWAGGER_URLS = {
-			"/swagger-resources/",
+			"/swagger-resources",
 			"/configuration",
 			"/swagger-ui.html",
-			"/v2/api-docs",
-			"/webjars/"
+			"/v2",
+			"/webjars"
 	};
 
 	@Autowired

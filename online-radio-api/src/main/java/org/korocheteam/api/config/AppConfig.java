@@ -23,7 +23,6 @@ import java.util.Map;
 // TODO: use profiles
 @PropertySource("classpath:application-dev.properties")
 @Import({DatabaseConfig.class, SecurityConfig.class})
-@EnableSwagger2
 public class AppConfig {
 
     @Value("${audio.path}")
@@ -43,16 +42,6 @@ public class AppConfig {
 
     @Autowired
     private CoverService coverService;
-
-    // TODO: fix swagger page
-    @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
-                .build();
-    }
 
     @Bean
     public Map<Genre, AudioStream> audioStreams() {
