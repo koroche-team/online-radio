@@ -1,20 +1,26 @@
 package org.korocheteam.api.services;
 
 import lombok.RequiredArgsConstructor;
-import org.korocheteam.api.exceptions.SongNotFoundException;
+import org.korocheteam.api.entities.SongServicePagesContainer;
+import org.korocheteam.api.exceptions.SongServiceException;
 import org.korocheteam.api.models.Song;
 import org.korocheteam.api.models.dtos.SongDto;
 import org.korocheteam.api.models.dtos.responses.TopSongsResponse;
 import org.korocheteam.api.repositories.LikeRepository;
 import org.korocheteam.api.repositories.SongRepository;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.DigestInputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,29 +28,27 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SongService {
     private final SongRepository songRepository;
-    private Iterator<Song> songIterator;
-    private Page<Song> page;
-    private Pageable pageRequest;
 
-    private final LikeRepository likeRepository;
+    private final SongServicePagesContainer pagesContainer;
 
-    public Song getNextSong() {
-        if (songIterator == null) {
-            pageRequest = PageRequest.of(0, 50);
-            page = songRepository.findAll(pageRequest);
-            songIterator = page.iterator();
+    public Song getNextSong(Song.Genre genre) {
+        if (pagesContainer.getPage(genre) == null) {
+            Pageable request = pagesContainer.setPageable(genre, PageRequest.of(0, 50));
+            Page<Song> page = pagesContainer.setPage(genre, songRepository.findAllByGenre(request, genre));
+            pagesContainer.setIterator(genre, page.iterator());
         }
-        if (!songIterator.hasNext()) {
-            System.out.println(page.getNumber());
+        if (!pagesContainer.getIterator(genre).hasNext()) {
+            Page<Song> page = pagesContainer.getPage(genre);
+            Pageable pageable = pagesContainer.getPageable(genre);
             if (page.getNumber() ==  page.getTotalPages()-1) {
-                pageRequest = pageRequest.first();
+                pagesContainer.setPageable(genre, pageable.first());
             } else {
-                pageRequest = pageRequest.next();
+                pagesContainer.setPageable(genre, pageable.next());
             }
-            page = songRepository.findAll(pageRequest);
-            songIterator = page.iterator();
+            page = pagesContainer.setPage(genre, songRepository.findAllByGenre(pageable, genre));
+            pagesContainer.setIterator(genre, page.iterator());
         }
-        return songIterator.next();
+        return pagesContainer.getIterator(genre).next();
     }
 
     public Song addSong(Song song) {
@@ -52,16 +56,15 @@ public class SongService {
     }
 
     public boolean doesExists(Song song) {
-        // TODO: add proper song check with file hash value
-        return songRepository.exists(Example.of(song));
+        return songRepository.findByHash(song.getHash()).isPresent();
     }
 
     public void cleanRepository() {
         songRepository.deleteAll();
     }
 
-    public TopSongsResponse getTopTenSongs() {
-        List<SongDto> songs = SongDto.from(songRepository.findAll());
+    public TopSongsResponse getTopTenSongs(String genre) {
+        List<SongDto> songs = SongDto.from(songRepository.findAllByGenre(Song.Genre.valueOf(genre.toUpperCase())));
         songs.sort(Comparator.comparingInt(SongDto::getAmountOfLikes).reversed());
 
         return TopSongsResponse.builder()

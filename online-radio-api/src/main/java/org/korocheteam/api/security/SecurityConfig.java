@@ -81,7 +81,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers(SIGNUP_URL).permitAll()
 				.antMatchers(LOGIN_FILTER_PROCESS_URL).permitAll()
-				.antMatchers("/status/**").permitAll()
+				.antMatchers(STATUS_URL+"/**").permitAll()
 				.antMatchers(SWAGGER_ANT_URLS).permitAll()
 				.antMatchers(SCORE_URL).authenticated()
 				.antMatchers(LEADERBOARD_URL).authenticated()

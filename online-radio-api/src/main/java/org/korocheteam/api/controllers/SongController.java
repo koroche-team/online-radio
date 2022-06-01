@@ -5,6 +5,7 @@ import org.korocheteam.api.models.dtos.responses.TopSongsResponse;
 import org.korocheteam.api.services.SongService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,8 +16,8 @@ public class SongController {
 
 	private final SongService songService;
 
-	@GetMapping("/top")
-	public ResponseEntity<TopSongsResponse> getTopTenSongs() {
-		return ResponseEntity.ok(songService.getTopTenSongs());
+	@GetMapping("/top/{genre}")
+	public ResponseEntity<TopSongsResponse> getTopTenSongs(@PathVariable("genre") String genre) {
+		return ResponseEntity.ok(songService.getTopTenSongs(genre));
 	}
 }

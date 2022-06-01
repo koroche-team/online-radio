@@ -40,3 +40,15 @@ Content-Type: application/json
   "email": "username@mail.com",
   "songId": 8
 }
+
+###
+GET http://localhost:8080/songs/top/breaks
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZUBtYWlsLmNvbSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiVVNFUiJ9XSwiaXNzIjoib25saW5lLXJhZGlvIiwiaWF0IjoxNjU0MDY3NDIzLCJleHAiOjE2NTQ5MzE0MjN9.1-v0n4NBGhNMME-vTLZCZwFAVH-H4DmJvmzdO66O8NI
+
+###
+GET http://localhost:8080/leaderboard
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZUBtYWlsLmNvbSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiVVNFUiJ9XSwiaXNzIjoib25saW5lLXJhZGlvIiwiaWF0IjoxNjU0MDY3NDIzLCJleHAiOjE2NTQ5MzE0MjN9.1-v0n4NBGhNMME-vTLZCZwFAVH-H4DmJvmzdO66O8NI
+
+###
+GET http://localhost:8080/profile/username
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZUBtYWlsLmNvbSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiVVNFUiJ9XSwiaXNzIjoib25saW5lLXJhZGlvIiwiaWF0IjoxNjU0MDY3NDIzLCJleHAiOjE2NTQ5MzE0MjN9.1-v0n4NBGhNMME-vTLZCZwFAVH-H4DmJvmzdO66O8NI
