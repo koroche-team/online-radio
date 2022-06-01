@@ -27,7 +27,7 @@ public class StatusController {
 
     private final AudioService audioService;
 
-    @ApiOperation("returns all genres(must contain token in header)")
+    @ApiOperation("returns all genres")
     @ApiResponse(code = 200, message = "returns list of genres", response = GenresResponse.class)
     @GetMapping
     public ResponseEntity<GenresResponse> getGenres() {
@@ -36,10 +36,10 @@ public class StatusController {
                 .body(GenresResponse.builder().genres(audioService.getGenres()).build());
     }
 
-    @ApiOperation("returns status of stream of specified genre(must contain token in header)")
+    @ApiOperation("returns status of stream of specified genre")
     @ApiResponse(code = 200, message = "returns status of specified genre", response = StreamStatusDto.class)
     @ApiImplicitParam(name = "genre", required = true, dataType = "String",
-            paramType = "query", value = "param to get status of stream of specified genre")
+            paramType = "path", value = "param to get status of stream of specified genre")
     @GetMapping("/{genre}")
     public ResponseEntity<StreamStatusDto> getStatus(@PathVariable("genre") String genre) {
         return ResponseEntity

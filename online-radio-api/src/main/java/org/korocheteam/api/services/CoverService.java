@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.korocheteam.api.exceptions.CoverNotFoundException;
 import org.korocheteam.api.models.Cover;
 import org.korocheteam.api.repositories.CoverRepository;
+import org.korocheteam.api.utils.UuidUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -20,6 +21,8 @@ public class CoverService {
     }
 
     public Cover getCoverByUuid(String uuid) {
+        if (!UuidUtils.isValidUUID(uuid))
+            throw new CoverNotFoundException("Provided string is not uuid");
         return coverRepository.findByUuid(UUID.fromString(uuid)).orElseThrow(CoverNotFoundException::new);
     }
 

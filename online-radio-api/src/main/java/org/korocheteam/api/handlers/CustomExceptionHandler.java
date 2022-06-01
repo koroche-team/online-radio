@@ -64,8 +64,14 @@ public class CustomExceptionHandler {
 
 	@ExceptionHandler(GenreNotFoundException.class)
 	public ResponseEntity<GenreExceptionResponse> handleGenreNotFound(GenreNotFoundException exception) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 				.body(GenreExceptionResponse.builder().message(exception.getMessage()).build());
+	}
+
+	@ExceptionHandler(CoverNotFoundException.class)
+	public ResponseEntity<CoverExceptionResponse> handleCoverNotFound(CoverNotFoundException exception) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+				.body(CoverExceptionResponse.builder().message(exception.getMessage()).build());
 	}
 
 	@ExceptionHandler(LoginException.class)

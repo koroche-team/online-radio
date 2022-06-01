@@ -7,6 +7,7 @@ import org.korocheteam.api.models.Genre;
 import org.korocheteam.api.models.dtos.StreamStatusDto;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -16,21 +17,18 @@ import static org.korocheteam.api.models.dtos.StreamStatusDto.from;
 @Service
 @RequiredArgsConstructor
 public class AudioService {
-    public final Map<Genre, AudioStream> streams;
+    public final Map<String, AudioStream> streams;
 
     public List<String> getGenres() {
-        return streams.keySet().stream()
-                .map(Enum::toString)
-                .map(String::toLowerCase)
-                .collect(Collectors.toList());
+        return new ArrayList<>(streams.keySet());
     }
 
     public StreamStatusDto getStreamStatus(String genre) {
-        if (!streams.containsKey(Genre.valueOf(genre.toUpperCase()))) {
+        if (!streams.containsKey(genre)) {
             throw new GenreNotFoundException(genre);
         }
 
-        return from(streams.get(Genre.valueOf(genre.toUpperCase())).getStreamStatus());
+        return from(streams.get(genre).getStreamStatus());
     }
 
     public void startStreams() {

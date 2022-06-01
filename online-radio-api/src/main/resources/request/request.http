@@ -25,7 +25,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/status
+GET http://localhost:8080/status/gg
 Content-Type: application/json
 
 ###

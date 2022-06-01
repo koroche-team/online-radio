@@ -44,17 +44,17 @@ public class AppConfig {
     private CoverService coverService;
 
     @Bean
-    public Map<Genre, AudioStream> audioStreams() {
-        Map<Genre, AudioStream> streams = new HashMap<>();
+    public Map<String, AudioStream> audioStreams() {
+        Map<String, AudioStream> streams = new HashMap<>();
         for(Genre genre: Genre.values()) {
             AudioStream audioStream = new AudioStream(icecastHost, icecastPassword, songService, coverService, audioPath, coversPath, genre);
-            streams.put(genre, audioStream);
+            streams.put(genre.toString().toLowerCase(), audioStream);
         }
         return streams;
     }
 
     @Bean
-    public AudioService audioService(Map<Genre, AudioStream> audioStreams) {
+    public AudioService audioService(Map<String, AudioStream> audioStreams) {
         AudioService audioService = new AudioService(audioStreams);
         audioService.startStreams();
         return audioService;

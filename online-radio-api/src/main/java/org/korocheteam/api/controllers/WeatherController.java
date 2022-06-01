@@ -25,7 +25,7 @@ public class WeatherController {
 	@ApiOperation("returns weather by city(must contain token in header)")
 	@ApiResponse(code = 200, message = "returns weather of specified city", response = WeatherResponse.class)
 	@ApiImplicitParam(name = "city", required = true, dataType = "String",
-			paramType = "query", value = "param to get weather of this city")
+			paramType = "path", value = "param to get weather of this city")
 	@GetMapping("/{city}")
 	public ResponseEntity<WeatherResponse> getWeatherOfCity(@PathVariable String city) {
 		return ResponseEntity.ok(weatherClient.getWeatherByCity(city));
