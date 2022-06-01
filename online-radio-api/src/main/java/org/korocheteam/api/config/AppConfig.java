@@ -21,7 +21,7 @@ import java.util.Map;
 @Configuration
 @ComponentScan("org.korocheteam.api")
 // TODO: use profiles
-@PropertySource("classpath:application-dev.properties")
+@PropertySource("classpath:application-production.properties")
 @Import({DatabaseConfig.class, SecurityConfig.class})
 public class AppConfig {
 

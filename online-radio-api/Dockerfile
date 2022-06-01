@@ -5,5 +5,5 @@ ADD libshout/libshout-java.so /usr/local/tomcat/target/libshout-java.so
 
 COPY ./audio /audio
 COPY ./covers /covers
-COPY build/libs/online-radio-api.war /usr/local/tomcat/webapps/ROOT.war
+COPY target/online-radio-api.war /usr/local/tomcat/webapps/ROOT.war
 CMD ["catalina.sh","run"]
