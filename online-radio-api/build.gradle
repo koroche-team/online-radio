@@ -53,7 +53,8 @@ dependencies {
     implementation 'io.springfox:springfox-swagger-ui:2.8.0'
     implementation 'io.swagger:swagger-core:1.5.19'
 
-
+    implementation 'com.cloudinary:cloudinary-http44:1.32.0'
+    implementation 'com.cloudinary:cloudinary-taglib:1.32.0'
 }
 
 sourceSets {

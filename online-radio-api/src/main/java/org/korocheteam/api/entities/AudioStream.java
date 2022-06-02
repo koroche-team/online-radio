@@ -20,6 +20,7 @@ import org.korocheteam.api.models.Song;
 import org.korocheteam.api.models.StreamStatus;
 import org.korocheteam.api.services.CoverService;
 import org.korocheteam.api.services.SongService;
+import org.korocheteam.api.utils.ImageUtil;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
@@ -49,6 +50,8 @@ public class AudioStream {
     private final String coversPath;
 
     private final Genre genre;
+
+    private final ImageUtil imageUtil;
 
     public void runAudioStream() {
         new Thread(() -> {
@@ -124,9 +127,13 @@ public class AudioStream {
                 UUID coverUuid = UUID.randomUUID();
                 BufferedImage image = artwork.getImage();
                 String pathToCover = coversPath + "/" + coverUuid + ".jpg";
-                ImageIO.write(image, "jpg", new File(pathToCover));
+                File pic = new File(pathToCover);
+                ImageIO.write(image, "jpg", pic);
+
+                String url = imageUtil.createUrl(pic);
+
                 cover = Cover.builder()
-                        .path(pathToCover)
+                        .path(url)
                         .hash(coverHash)
                         .uuid(coverUuid)
                         .build();
