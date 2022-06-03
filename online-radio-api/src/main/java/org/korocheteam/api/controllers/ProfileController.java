@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RequiredArgsConstructor
 @RestController
@@ -23,6 +24,13 @@ import javax.validation.Valid;
 public class ProfileController {
 
 	private final AccountService accountService;
+
+	@ApiOperation("returns current user profile(must contain token in header)")
+	@ApiResponse(code = 200, message = "returns current user profile", response = ProfileResponse.class)
+	@GetMapping
+	public ResponseEntity<ProfileResponse> getProfile(Authentication authentication) {
+		return ResponseEntity.ok(accountService.getProfileByEmail(authentication.getName()));
+	}
 
 	@ApiOperation("returns specified profile(must contain token in header)")
 	@ApiResponse(code = 200, message = "returns profile by nickname", response = ProfileResponse.class)
@@ -34,7 +42,7 @@ public class ProfileController {
 	@ApiOperation("update specified profile(must contain token in header)")
 	@ApiResponse(code = 202, message = "returns updated profile", response = AccountDto.class)
 	@PutMapping
-	public ResponseEntity<AccountDto> updateProfile(Authentication authentication, @Valid @RequestBody ProfileRequest profileRequest) {
+	public ResponseEntity<ProfileResponse> updateProfile(Authentication authentication, @Valid @RequestBody ProfileRequest profileRequest) {
 		return ResponseEntity
 				.status(HttpStatus.ACCEPTED)
 				.body(accountService.updateProfile(authentication.getName(), profileRequest));

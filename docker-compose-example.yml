@@ -13,5 +13,14 @@ services:
   online-radio-api:
     build: ./online-radio-api
     image: onlineradio.azurecr.io/online-radio-api
+    volumes:
+      - data-volume:/covers
     ports:
       - "8080:8080"
+
+volumes:
+  data-volume:
+    driver: azure_file
+    driver_opts:
+      share_name: online-radio-volume
+      storage_account_name: onlineradio

@@ -51,7 +51,14 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public AccountDto updateProfile(String email, ProfileRequest profileRequest) {
+	public ProfileResponse getProfileByEmail(String email) {
+		return ProfileResponse.builder()
+				.profile(from(accountsRepository.findByEmail(email).orElseThrow(AccountNotExistsException::new)))
+				.build();
+	}
+
+	@Override
+	public ProfileResponse updateProfile(String email, ProfileRequest profileRequest) {
 		Account account = accountsRepository.findByEmail(email).orElseThrow(AccountNotExistsException::new);
 		if (profileRequest.getEmail() != null) {
 			account.setEmail(profileRequest.getEmail());
@@ -62,6 +69,8 @@ public class AccountServiceImpl implements AccountService {
 		if (profileRequest.getPassword() != null) {
 			account.setHashPassword(passwordEncoder.encode(profileRequest.getPassword()));
 		}
-		return from(accountsRepository.save(account));
+		return ProfileResponse.builder()
+				.profile(from(accountsRepository.save(account)))
+				.build();
 	}
 }

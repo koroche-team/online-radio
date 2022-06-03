@@ -8,6 +8,6 @@ import org.korocheteam.api.models.dtos.responses.ProfileResponse;
 public interface AccountService {
 	LeaderboardResponse getAllAccountsSortedByScore();
 	ProfileResponse getProfileByNickname(String nickname);
-
-	AccountDto updateProfile(String email, ProfileRequest profileRequest);
+	ProfileResponse getProfileByEmail(String email);
+	ProfileResponse updateProfile(String email, ProfileRequest profileRequest);
 }
